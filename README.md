@@ -21,7 +21,7 @@ The page should not reload in either of the operation.
 
 I used:-
 
-Python 3.6
-django 1.10
-javascrpt
+Python 3.6,
+django 1.10,
+javascrpt,
 vuejs and jquery.
