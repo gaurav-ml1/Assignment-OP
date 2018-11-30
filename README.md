@@ -3,6 +3,7 @@ This is django app with vue.js to create product with category and sub category.
 
 Assignment-
 
+
 #0 - Create a virtual env for the project
 #1 - Django Model for categories
 #2 - Django Model for Subcategories linked to categories
@@ -18,6 +19,8 @@ Assignment-
 The grid should show each product with its sub category and category mentioned. Each column should be sortable in ascending and descending order.
 Add button adds a product to the list with category and subcategory as drop-down
 The page should not reload in either of the operation.
+
+
 
 I used:-
 
