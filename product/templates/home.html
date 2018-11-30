@@ -1,0 +1,84 @@
+{% load static from staticfiles %}
+<html lang="en">
+{% block scoped_css %}
+    <link type="text/css" rel="stylesheet" href="//unpkg.com/bootstrap/dist/css/bootstrap.min.css"/>
+    <link type="text/css" rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css"/>
+    <link type="text/css" rel="stylesheet" href="https://cdn.datatables.net/select/1.2.7/css/select.dataTables.min.css"/>
+{% endblock scoped_css %}
+
+<body>
+    <div id="home-app">
+       <div class="row">
+            <div class="col-md-12">
+                <div style="margin-left: 143px">
+                    <button class="button add-button" onclick="addEditOption()">Add</button>
+                </div>
+                <table class="table table-responsive-lg table-bordered customers" style="width:80%">
+                <thead>
+                    <tr>
+                        <th>&nbsp;&nbsp;</th>
+                        <th>Title</th>
+                        <th>Sub category</th>
+                        <th>Category</th>
+                    </tr>
+                </thead>
+                <tbody id="new-column">
+                    <tr v-for="product in product.products">
+                        <td><input class="checkbox" type="checkbox"></td>
+                        <td>{% verbatim %}{{ product.title }}</td>
+                        <td>{{ product.sub_category.name }}</td>
+                        <td>{{ product.sub_category.category.name }} {% endverbatim %}</td>
+                    </tr>
+                </tbody>
+                </table>
+            </div>
+       </div>
+    </div>
+</body>
+{% block page_level_scripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/select/1.2.7/js/dataTables.select.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
+    <script>
+     let dataTableObject = $(".customers").DataTable({
+         /*
+         columnDefs: [ {
+            orderable: false,
+            className: 'select-checkbox',
+            targets:   0
+        } ],
+        select: {
+            style:    'os',
+            selector: 'td:first-child'
+        },
+        */
+        order: [[ 1, 'asc' ]],
+        searching: false,
+        paging: false,
+        info: false
+    });
+     function addEditOption() {
+         $(".add-button").attr("disabled", "disabled")
+         home_app.getCategories();
+         home_app.getSubCategories();
+         $("#new-column").append('<tr>\n' +
+             '                        <td><a href="#" onclick="home_app.saveProduct()">Save</a><br><a href="/">Cancel</a></td>\n' +
+             '                        <td><input type="text" id="product-title" class="form-control"></td>\n' +
+             '                        <td>\n' +
+             '                            <select id="sub-category-select" class="form-control">\n' +
+             '                                <option value="select_category" selected>Select Category</option>\n' +
+             '                            </select>\n' +
+             '                        </td>\n' +
+             '                        <td>\n' +
+             '                            <select id="category-select" class="form-control">\n' +
+             '                                <option value="select_subcategory" selected>Select Subcategory</option>\n' +
+             '                            </select>\n' +
+             '                        </td>\n' +
+             '                    </tr>');
+     }
+</script>
+<script src="{% static 'js/home.js' %}"></script>
+</html>
+{% endblock page_level_scripts %}
